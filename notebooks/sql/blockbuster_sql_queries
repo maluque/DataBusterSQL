@@ -1,0 +1,76 @@
+
+-- total rents grouped by store after '2005-05-26 12:00:00' and containing "Deleted Scenes"
+SELECT * -- rental.store_id, count(rental.copy_id)
+FROM rental
+
+LEFT JOIN inventory
+
+ON rental.copy_id = inventory.copy_id
+
+LEFT JOIN film
+
+ON inventory.film_id = film.film_id
+
+LEFT JOIN special_feature
+
+ON film.film_id = special_feature.film_id
+
+WHERE special_feature.special_features = "Deleted Scenes"
+AND STR_TO_DATE(rental.rental_date, '%Y-%m-%d %H:%i:%s') > '2005-05-26 12:00:00';
+
+-- GROUP BY rental.store_id ;
+
+
+
+
+-- total rents grouped by store and rating type after '2005-05-26 12:00:00'
+
+SELECT
+store.country AS STORE,
+film.rating AS RATING,
+count(rental.copy_id) AS TOTAL_RENTS,
+avg(film.length) AS MEAN_LENGTH
+
+FROM rental
+
+LEFT JOIN inventory
+ON rental.copy_id = inventory.copy_id
+
+LEFT JOIN store
+ON rental.store_id = store.store_id
+
+LEFT JOIN film
+ON inventory.film_id = film.film_id
+
+LEFT JOIN special_feature
+ON film.film_id = special_feature.film_id
+
+WHERE STR_TO_DATE(rental.rental_date, '%Y-%m-%d %H:%i:%s') > '2005-05-26 12:00:00'
+GROUP BY store.country, film.rating;
+
+
+--
+
+-- total rents grouped by store after '2005-05-26 12:00:00' and containing "Deleted Scenes"
+
+SELECT
+client.name, film.rating, count(inventory.film_id) AS RENTALS
+
+FROM policy
+
+LEFT JOIN inventory
+ON policy.copy_id = inventory.copy_id
+
+LEFT JOIN film
+ON inventory.film_id = film.film_id
+
+LEFT JOIN rental
+ON inventory.copy_id = rental.copy_id
+
+RIGHT JOIN client
+ON rental.client_id = client.client_id
+
+WHERE film.rating = "G"
+GROUP BY client.name
+ORDER BY RENTALS DESC
+;
