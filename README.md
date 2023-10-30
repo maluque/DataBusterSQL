@@ -21,7 +21,9 @@ The complete pipeline includes these main steps:
 ![pipeline](images/pipeline.png)
 
 <br/>
----
+
+-------
+
 <br/>
 <br/>
 
@@ -50,7 +52,7 @@ DataBusterSQL
 
 Each jupyter notebook includes a summary of the cleaning process.
 
-<div style="border: 4px solid yellow; padding: 0px;">
+<div style="border: 4px solid white; padding: 0px;">
     <img src="images/cleaning.png" alt="Your Image Description" />
 </div>
 
@@ -68,7 +70,7 @@ After cleaning the csv files from NAs, duplicates or uninformative values, we ha
 # 2. Create the DDBB EER<a name="EER"></a>
 
 
-<div style="border: 4px solid yellow; padding: 0px;">
+<div style="border: 4px solid white; padding: 0px;">
     <img src="images/blockbuster_EER.png" alt="Your Image Description" />
 </div>
 
@@ -180,7 +182,7 @@ DataBusterSQL
 ```
  `global_exploration`.ipynb
 
-<div style="border: 4px solid yellow; padding: 0px;">
+<div style="border: 4px solid white; padding: 0px;">
     <img src="images/changes.png" alt="Your Image Description" />
 </div>
 
@@ -188,15 +190,15 @@ DataBusterSQL
 
 The DDBB was created from `jupyter notebook` using `sqlalchemy.py` module. The pipeline consists in **1)** creating a cursor to connect to mySQL workbench, **2)** create a DDBB, **3)** create the tables and **4)** establish the primary key (PK) and foreign key (FK) relationships between the columns of the multiple tables.
 
-<div style="border: 4px solid yellow; padding: 0px;">
+<div style="border: 4px solid white; padding: 0px;">
     <img src="images/alchemy.png" alt="Your Image Description" />
 </div>
 
-<div style="border: 4px solid yellow; padding: 0px;">
+<div style="border: 4px solid white; padding: 0px;">
     <img src="images/primary.png" alt="Your Image Description" />
 </div>
 
-<div style="border: 4px solid yellow; padding: 0px;">
+<div style="border: 4px solid white; padding: 0px;">
     <img src="images/foreign.png" alt="Your Image Description" />
 </div>
 
@@ -232,6 +234,6 @@ To import the DDBB into `mySQL Workbench` we need to:
 3. Copy/paste and run the queries available at `blockbuster_sql_queries.sql`.
 
 
-<div style="border: 4px solid yellow; padding: 0px;">
+<div style="border: 4px solid white; padding: 0px;">
     <img src="images/query.png" alt="Your Image Description" />
 </div>
