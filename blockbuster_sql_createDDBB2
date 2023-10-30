@@ -1,0 +1,219 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema blockbuster
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema blockbuster
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `blockbuster` DEFAULT CHARACTER SET latin1 ;
+USE `blockbuster` ;
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`film`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`film` (
+  `film_id` BIGINT(20) NOT NULL,
+  `title` TEXT NULL DEFAULT NULL,
+  `description` TEXT NULL DEFAULT NULL,
+  `release_year` BIGINT(20) NULL DEFAULT NULL,
+  `length` BIGINT(20) NULL DEFAULT NULL,
+  `rating` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`film_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`actor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`actor` (
+  `actor_id` BIGINT(20) NOT NULL,
+  `first_name` TEXT NULL DEFAULT NULL,
+  `last_name` TEXT NULL DEFAULT NULL,
+  `film_id` BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`actor_id`),
+  CONSTRAINT `film_id`
+    FOREIGN KEY (`film_id`)
+    REFERENCES `blockbuster`.`film` (`film_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+CREATE INDEX `film_id` ON `blockbuster`.`actor` (`film_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`category` (
+  `category_id` BIGINT(20) NOT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`category_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`client`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`client` (
+  `client_id` BIGINT(20) NOT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  `address` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`client_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`film_has_category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`film_has_category` (
+  `category_id` BIGINT(20) NULL DEFAULT NULL,
+  `film_id` BIGINT(20) NULL DEFAULT NULL,
+  CONSTRAINT `category_id`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `blockbuster`.`category` (`category_id`),
+  CONSTRAINT `film_id`
+    FOREIGN KEY (`film_id`)
+    REFERENCES `blockbuster`.`film` (`film_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+CREATE INDEX `category_id` ON `blockbuster`.`film_has_category` (`category_id` ASC);
+
+CREATE INDEX `film_id_idx` ON `blockbuster`.`film_has_category` (`film_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`inventory`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`inventory` (
+  `copy_id` BIGINT(20) NOT NULL,
+  `film_id` BIGINT(20) NULL DEFAULT NULL,
+  `store_id` BIGINT(20) NULL DEFAULT NULL,
+  `available` TINYINT(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`copy_id`),
+  CONSTRAINT `film_id`
+    FOREIGN KEY (`film_id`)
+    REFERENCES `blockbuster`.`film` (`film_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+CREATE INDEX `film_id_idx` ON `blockbuster`.`inventory` (`film_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`policy`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`policy` (
+  `copy_id` BIGINT(20) NULL DEFAULT NULL,
+  `rental_rate` DOUBLE NULL DEFAULT NULL,
+  `rental_duration` BIGINT(20) NULL DEFAULT NULL,
+  `replacement_cost` DOUBLE NULL DEFAULT NULL,
+  `policy_id` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`policy_id`),
+  CONSTRAINT `copy_id`
+    FOREIGN KEY (`copy_id`)
+    REFERENCES `blockbuster`.`inventory` (`copy_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+CREATE INDEX `copy_id_idx` ON `blockbuster`.`policy` (`copy_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`staff`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`staff` (
+  `staff_id` BIGINT(20) NOT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  `store_id` BIGINT(20) NULL DEFAULT NULL,
+  `salary` BIGINT(20) NULL DEFAULT NULL,
+  `supervised_by` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`staff_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`store`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`store` (
+  `store_id` BIGINT(20) NOT NULL,
+  `country` TEXT NULL DEFAULT NULL,
+  `address` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`store_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`rental`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`rental` (
+  `rental_id` BIGINT(20) NOT NULL,
+  `rental_date` TEXT NULL DEFAULT NULL,
+  `return_date` TEXT NULL DEFAULT NULL,
+  `invoice` BIGINT(20) NULL DEFAULT NULL,
+  `client_id` BIGINT(20) NULL DEFAULT NULL,
+  `staff_id` BIGINT(20) NULL DEFAULT NULL,
+  `store_id` BIGINT(20) NULL DEFAULT NULL,
+  `copy_id` BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`rental_id`),
+  CONSTRAINT `client_id`
+    FOREIGN KEY (`client_id`)
+    REFERENCES `blockbuster`.`client` (`client_id`),
+  CONSTRAINT `copy_id`
+    FOREIGN KEY (`copy_id`)
+    REFERENCES `blockbuster`.`inventory` (`copy_id`),
+  CONSTRAINT `staff_id`
+    FOREIGN KEY (`staff_id`)
+    REFERENCES `blockbuster`.`staff` (`staff_id`),
+  CONSTRAINT `store_id`
+    FOREIGN KEY (`store_id`)
+    REFERENCES `blockbuster`.`store` (`store_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+CREATE INDEX `copy_id` ON `blockbuster`.`rental` (`copy_id` ASC);
+
+CREATE INDEX `client_id` ON `blockbuster`.`rental` (`client_id` ASC);
+
+CREATE INDEX `staff_id` ON `blockbuster`.`rental` (`staff_id` ASC);
+
+CREATE INDEX `store_id` ON `blockbuster`.`rental` (`store_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `blockbuster`.`special_feature`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blockbuster`.`special_feature` (
+  `film_id` BIGINT(20) NULL DEFAULT NULL,
+  `special_features` TEXT NULL DEFAULT NULL,
+  CONSTRAINT `film_id`
+    FOREIGN KEY ()
+    REFERENCES `blockbuster`.`film` ()
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

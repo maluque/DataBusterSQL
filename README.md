@@ -42,8 +42,12 @@ After cleaning the csv files from NAs, duplicates or uninformative values, we ha
 
 # 2. DDBB EER
 
+
+![EERbuster](images/blockbuster_EER.png)
+
+
 The DDBB will be made by **3 main tables**: `film.csv`, `rental.csv` and `policy.csv` <br/>
-and **8 child tables**  `language.csv`, `category.csv`, `special_features.csv`, `actor.csv`, 
+and **9 child tables**  `language.csv`, `category.csv`, `special_features.csv`, `actor.csv`, `film_has_category.csv`, 
 `store.csv`, `staff.csv`, `inventory.csv`, `client.csv`
 
 Next, I will enumerate the columns of each **main table**,<br/> the **FK's** will relate to the **child** tables just referred.
@@ -81,8 +85,7 @@ The store possess multiple copies of the same film so **film_id != copy_id**
    * copy_id
 
 
-
-   ## `policy.csv`
+## `policy.csv`
 
 Previous assumptions:  <br/>
 The DDBB manages multiple stores located in different countries under different renting policies.
@@ -132,4 +135,11 @@ The DDBB manages multiple stores located in different countries under different 
 
 ## Child tables related to the film info
 
-###  `language.csv`,   `category.csv`,   `actor.csv`,   `special_features.csv`
+###  `language.csv`,   `category.csv`,   `film_has_category.csv`,   `actor.csv`,   `special_features.csv`
+
+
+## LOAD DDBB sql file and make some queries
+
+1. Create a schema called `blockbuster``
+2. Import data form `blockbuster.sql` available in `sql` folder
+3. Run the queries available in XXX file also available in `sql` folder.
