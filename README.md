@@ -50,7 +50,10 @@ DataBusterSQL
 
 Each jupyter notebook includes a summary of the cleaning process.
 
-![cleaning](images/cleaning.png)
+<div style="border: 4px solid yellow; padding: 0px;">
+    <img src="images/cleaning.png" alt="Your Image Description" />
+</div>
+
 
 The cleaned dataframes are renamed as **`df *** 1.csv`** and available at:
 
@@ -65,7 +68,9 @@ After cleaning the csv files from NAs, duplicates or uninformative values, we ha
 # 2. Create the DDBB EER<a name="EER"></a>
 
 
-![EERbuster](images/blockbuster_EER.png)
+<div style="border: 4px solid yellow; padding: 0px;">
+    <img src="images/blockbuster_EER.png" alt="Your Image Description" />
+</div>
 
 
 The DDBB will be made by **3 main tables**: `film.csv`, `rental.csv` and `policy.csv` <br/>
@@ -175,17 +180,25 @@ DataBusterSQL
 ```
  `global_exploration`.ipynb
 
-![changes](images/changes.png)
+<div style="border: 4px solid yellow; padding: 0px;">
+    <img src="images/changes.png" alt="Your Image Description" />
+</div>
 
 ## 4. Work with mySQL through python<a name="sqlalchemy1"></a>
 
 The DDBB was created from `jupyter notebook` using `sqlalchemy.py` module. The pipeline consists in **1)** creating a cursor to connect to mySQL workbench, **2)** create a DDBB, **3)** create the tables and **4)** establish the primary key (PK) and foreign key (FK) relationships between the columns of the multiple tables.
 
-![alchemy](images/alchemy.png)
+<div style="border: 4px solid yellow; padding: 0px;">
+    <img src="images/alchemy.png" alt="Your Image Description" />
+</div>
 
-![primary](images/primary.png)
+<div style="border: 4px solid yellow; padding: 0px;">
+    <img src="images/primary.png" alt="Your Image Description" />
+</div>
 
-![foreign](images/foreign.png)
+<div style="border: 4px solid yellow; padding: 0px;">
+    <img src="images/foreign.png" alt="Your Image Description" />
+</div>
 
 
 The code to construct the DDBB is available in:
@@ -218,4 +231,7 @@ To import the DDBB into `mySQL Workbench` we need to:
 2. Import from "Self-Contained File": `blockbuster.sql` 
 3. Copy/paste and run the queries available at `blockbuster_sql_queries.sql`.
 
-![query](images/query.png)
+
+<div style="border: 4px solid yellow; padding: 0px;">
+    <img src="images/query.png" alt="Your Image Description" />
+</div>
