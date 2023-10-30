@@ -25,7 +25,7 @@ The complete pipeline includes these main steps:
 # 1. Clean the data<a name="clean1"></a>
 
 
-The data cleaning of each original table is performed in separated jupyter notebooks stored in:
+The data cleaning of each original table is performed in separated jupyter notebooks available at:
 <br/>
 
 
@@ -43,7 +43,7 @@ DataBusterSQL
 - cleanDF_pipeline_`inventory`.ipynb
 - cleanDF_pipeline_`film`.ipynb
 
-The cleaned dataframes are renamed as **`df *** 1.csv`** and stored in:
+The cleaned dataframes are renamed as **`df *** 1.csv`** and available at:
 
 ```
 DataBusterSQL 
@@ -158,8 +158,7 @@ The DDBB manages multiple stores located in different countries under different 
 
 Once we established the DDBB structure, we had to make changes in the tables to accomodate the EER design.
 
-The editing of the tables is performed in:
-
+The code to editing the cleaned DF's is available at:
 ```
 DataBusterSQL 
 |__ notebooks/                           
@@ -169,9 +168,9 @@ DataBusterSQL
 
 ## 4. SQL ALQUEMY<a name="sqlalchemy1"></a>
 
-The DDBB was created from juptyer using `sqlalchemy.py` module. The pipeline consists in 1) creating a cursor to connect to mySQL workbench, 2) create a DDBB, 3) create the tables and 4) establish the primary key (PK) and foreign key (FK) relationships between the columns of the multiple tables.
+The DDBB was created from `jupyter notebook` using `sqlalchemy.py` module. The pipeline consists in **1)** creating a cursor to connect to mySQL workbench, **2)** create a DDBB, **3)** create the tables and **4)** establish the primary key (PK) and foreign key (FK) relationships between the columns of the multiple tables.
 
-The DDBB construction is performed in:
+The code to construct the DDBB is available in:
 
 ```
 DataBusterSQL 
@@ -184,7 +183,7 @@ Once the DDBB is created and filled with data, we can explore and manipulate the
 
 After corroborating that the structure of the DDBB and data format is correct, we can export both the EER and tables in a single `.sql` file.
 
-The DDBB can be imported to `mySQL Workbench` and make some exemplary queries from:
+The DDBB can be imported to `mySQL Workbench` and make some example queries from:
 
 ```
 DataBusterSQL 
@@ -198,6 +197,6 @@ DataBusterSQL
 To import the DDBB into `mySQL Workbench` we need to:
 
 1. Create a schema called `blockbuster`
-2. Import from Self-Contained File: `blockbuster.sql` 
-3. Copy/paste and run the queries available in `blockbuster_sql_queries.sql`.
+2. Import from "Self-Contained File": `blockbuster.sql` 
+3. Copy/paste and run the queries available at `blockbuster_sql_queries.sql`.
 
