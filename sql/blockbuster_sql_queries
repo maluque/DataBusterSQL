@@ -1,29 +1,25 @@
 
--- total rents grouped by store after '2005-05-26 12:00:00' and containing "Deleted Scenes"
-SELECT * -- rental.store_id, count(rental.copy_id)
+
+-- total rents by store id between 12:00:00 and 24:00:00 of 2005-05-26:
+SELECT rental.store_id AS Tienda, count(rental.copy_id) AS Alquileres
 FROM rental
 
 LEFT JOIN inventory
-
 ON rental.copy_id = inventory.copy_id
 
 LEFT JOIN film
-
 ON inventory.film_id = film.film_id
 
 LEFT JOIN special_feature
-
 ON film.film_id = special_feature.film_id
 
-WHERE special_feature.special_features = "Deleted Scenes"
-AND STR_TO_DATE(rental.rental_date, '%Y-%m-%d %H:%i:%s') > '2005-05-26 12:00:00';
+WHERE STR_TO_DATE(rental.rental_date, '%Y-%m-%d %H:%i:%s') > '2005-05-26 12:00:00'
+AND STR_TO_DATE(rental.rental_date, '%Y-%m-%d %H:%i:%s') < '2005-05-26 24:00:00'
 
--- GROUP BY rental.store_id ;
-
-
+GROUP BY rental.store_id;
 
 
--- total rents grouped by store and rating type after '2005-05-26 12:00:00'
+-- total rents and mean film length by store country and rating 
 
 SELECT
 store.country AS STORE,
@@ -45,13 +41,7 @@ ON inventory.film_id = film.film_id
 LEFT JOIN special_feature
 ON film.film_id = special_feature.film_id
 
-WHERE STR_TO_DATE(rental.rental_date, '%Y-%m-%d %H:%i:%s') > '2005-05-26 12:00:00'
-GROUP BY store.country, film.rating;
-
-
---
-
--- total rents grouped by store after '2005-05-26 12:00:00' and containing "Deleted Scenes"
+-- ranking of clients who have rented more films rated as "G"
 
 SELECT
 client.name, film.rating, count(inventory.film_id) AS RENTALS
