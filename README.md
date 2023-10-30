@@ -1,4 +1,4 @@
-![buster](images/blockbuster.jpg)
+![buster](images/blockbuster2.png)
 
 
 # DataBusterSQL
@@ -15,6 +15,10 @@ The complete pipeline includes these main steps:
 4. Connect to [mySQL through python](#sqlalchemy1). Create the DDBB, Load the clean DFs and Establish the PK-FK relations between tables
 5. [Run Queries](#queries) to extract relevant info from the DDBB
 
+
+<br/>
+
+![pipeline](images/pipeline.png)
 
 <br/>
 ---
@@ -42,6 +46,11 @@ DataBusterSQL
 - cleanDF_pipeline_`category`ipynb
 - cleanDF_pipeline_`inventory`.ipynb
 - cleanDF_pipeline_`film`.ipynb
+
+
+Each jupyter notebook includes a summary of the cleaning process.
+
+![cleaning](images/cleaning.png)
 
 The cleaned dataframes are renamed as **`df *** 1.csv`** and available at:
 
@@ -149,12 +158,12 @@ The DDBB manages multiple stores located in different countries under different 
 
 ----
 
-## Child tables related to the film info
+### Child tables related to the film info
 
 ###  `language.csv`,   `category.csv`,   `film_has_category.csv`,   `actor.csv`,   `special_features.csv`
 
 
-## 3. Make the changes<a name="changes1"></a>
+## 3. Make the required changes in the cleaned tables to accommodate the data into the EER <a name="changes1"></a>
 
 Once we established the DDBB structure, we had to make changes in the tables to accomodate the EER design.
 
@@ -166,11 +175,18 @@ DataBusterSQL
 ```
  `global_exploration`.ipynb
 
-
+![changes](images/changes.png)
 
 ## 4. Work with mySQL through python<a name="sqlalchemy1"></a>
 
 The DDBB was created from `jupyter notebook` using `sqlalchemy.py` module. The pipeline consists in **1)** creating a cursor to connect to mySQL workbench, **2)** create a DDBB, **3)** create the tables and **4)** establish the primary key (PK) and foreign key (FK) relationships between the columns of the multiple tables.
+
+![alchemy](images/alchemy.png)
+
+![primary](images/primary.png)
+
+![foreign](images/foreign.png)
+
 
 The code to construct the DDBB is available in:
 
@@ -202,3 +218,4 @@ To import the DDBB into `mySQL Workbench` we need to:
 2. Import from "Self-Contained File": `blockbuster.sql` 
 3. Copy/paste and run the queries available at `blockbuster_sql_queries.sql`.
 
+![query](images/query.png)
