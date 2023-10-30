@@ -7,12 +7,15 @@
 The goal of this project is to build a database to manage a blockbuster business.
 The complete pipeline includes these main steps:
 
-* 1 Clean the DataFrames (original csv)
-* 2 Design the EER concept
-* 3 Make the necessary changes in the tables to accomodate into the EER
-* 4 Connect to mySQL through python. Create the DDBB and Load the clean DFs
-* 5 Establish the PK-FK relations between table IDs through MySQL Workbench
-* 6 Run Queries to extract relevant info from the DDBB
+---
+
+1. [Clean the DataFrames](#clean1) (original csv)
+2. Design the [EER concept](#EER)
+3. [Make the necessary changes](#changes1) in the tables to accomodate into the EER
+4. Connect to [mySQL through python](#sqlalchemy1). Create the DDBB and Load the clean DFs
+5. Establish the [PK-FK relations](#sqlalchemy2) between table IDs through MySQL Workbench
+6. [Run Queries](#queries) to extract relevant info from the DDBB
+
 
 <br/>
 -----
@@ -20,14 +23,13 @@ The complete pipeline includes these main steps:
 <br/>
 
 
+# 1. Clean the data<a name="clean1"></a>
 
-
-
-# 1. DataBusterSQL
 
 The data cleaning of each original table is performed in separated jupyter notebooks stored in:
 <br/>
 <br/>
+
 `notebooks/def/`
 - cleanDF_pipeline_`rental`.ipynb
 - cleanDF_pipeline_`old_HDD`.ipynb
@@ -40,7 +42,7 @@ The data cleaning of each original table is performed in separated jupyter noteb
 
 After cleaning the csv files from NAs, duplicates or uninformative values, we have to consider the business needs and data availability to design an efficient EER of the DDBB. I propose the following EER structure:
 
-# 2. DDBB EER
+# 2. Create the DDBB EER<a name="EER"></a>
 
 
 ![EERbuster](images/blockbuster_EER.png)
@@ -55,7 +57,8 @@ Next, I will enumerate the columns of each **main table**,<br/> the **FK's** wil
 
 ## `film.csv`
 
-Previous assumptions: The business rents VHS and they only include 1 language
+**Previous assumptions:** <br/>
+The business rents VHS and they only include 1 language
 The DDBB could be adapted to renting DVDs easily as the multiple languages could be stored in  `inventory.csv` as a new column associated to the specific film `copy_id`.
 
 * `(PK)film_id`
@@ -68,7 +71,7 @@ The DDBB could be adapted to renting DVDs easily as the multiple languages could
 
 ## `rental.csv`
 
-Previous assumptions: <br/>
+**Previous assumptions:** <br/>
 If a client rents multiple films, we will generate multiple rental_ids <br/>
 The store possess multiple copies of the same film so **film_id != copy_id**
 
@@ -87,7 +90,7 @@ The store possess multiple copies of the same film so **film_id != copy_id**
 
 ## `policy.csv`
 
-Previous assumptions:  <br/>
+**Previous assumptions:** <br/>
 The DDBB manages multiple stores located in different countries under different renting policies.
 
 `film_id` and `store_id` are represented as a single column `copy_id` that refers to the physical copy of the film. The use of this columns will also facilitate to keep the inventory track.
@@ -138,7 +141,13 @@ The DDBB manages multiple stores located in different countries under different 
 ###  `language.csv`,   `category.csv`,   `film_has_category.csv`,   `actor.csv`,   `special_features.csv`
 
 
-## LOAD DDBB sql file and make some queries
+## 3. MAKE THE CHANGES<a name="changes1"></a>
+
+## 4. SQL ALQUEMY<a name="sqlalchemy1"></a>
+
+## 5. SQL ALQUEMY2<a name="sqlalchemy2"></a>
+
+## 5. LOAD DDBB sql file and make some queries<a name="queries"></a>
 
 1. Create a schema called `blockbuster``
 2. Import data form `blockbuster.sql` available in `sql` folder
