@@ -166,7 +166,9 @@ DataBusterSQL
 ```
  `global_exploration`.ipynb
 
-## 4. SQL ALQUEMY<a name="sqlalchemy1"></a>
+
+
+## 4. Work with mySQL through python<a name="sqlalchemy1"></a>
 
 The DDBB was created from `jupyter notebook` using `sqlalchemy.py` module. The pipeline consists in **1)** creating a cursor to connect to mySQL workbench, **2)** create a DDBB, **3)** create the tables and **4)** establish the primary key (PK) and foreign key (FK) relationships between the columns of the multiple tables.
 
