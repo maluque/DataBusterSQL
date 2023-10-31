@@ -233,7 +233,11 @@ To import the DDBB into `mySQL Workbench` we need to:
 2. Import from "Self-Contained File": `blockbuster.sql` 
 3. Copy/paste and run the queries available at `blockbuster_sql_queries.sql`.
 
-
 <div style="border: 4px solid white; padding: 0px;">
     <img src="images/query.png" alt="Your Image Description" />
+</div>
+
+
+<div style="border: 4px solid white; padding: 0px;">
+    <img src="images/query3.png" alt="Your Image Description" />
 </div>
