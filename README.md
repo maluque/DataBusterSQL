@@ -9,11 +9,12 @@ The complete pipeline includes these main steps:
 
 ---
 
-1. [Clean the DataFrames](#clean1) 
-2. Design the [EER concept](#EER)
-3. [Make the necessary changes](#changes1) in the tables to accomodate into the EER
-4. Connect to [mySQL through python](#sqlalchemy1). Create the DDBB, Load the clean DFs and Establish the PK-FK relations between tables
-5. [Run Queries](#queries) to extract relevant info from the DDBB
+First we [clean the DataFrames](#clean1). Then, we design the [EER diagram](#EERD)
+to define the structure of our DDBB. With the EERD in hand, we [Make the necessary changes](#changes1) in the tables to accomodate the data into the DDBB.
+
+Once we conclude the data transformation, we need to create the tables of the DDBB, establish the PK-FK relations between tables and load the clean DFs by connecting to [mySQL through python](#sqlalchemy1).
+
+Finally, we can extract relevant info from the DDBB by running [Queries](#queries).
 
 
 <br/>
@@ -22,13 +23,13 @@ The complete pipeline includes these main steps:
 
 <br/>
 
--------
+------
 
-<br/>
-<br/>
+## Go to:
 
-
-# 1. Clean the data<a name="clean1"></a>
+<details>
+<summary> 1. Clean the data<a name="clean1"></a></summary>
+<br>
 
 
 The data cleaning of each original table is performed in separated jupyter notebooks available at:
@@ -38,16 +39,8 @@ The data cleaning of each original table is performed in separated jupyter noteb
 ```
 DataBusterSQL 
 |__ notebooks/                           
-   |__ def/  
+   |__ def/`cleanDF_pipeline_******.ipynb``
 ```
-
-- cleanDF_pipeline_`rental`.ipynb
-- cleanDF_pipeline_`old_HDD`.ipynb
-- cleanDF_pipeline_`language`ipynb
-- cleanDF_pipeline_`actor`.ipynb
-- cleanDF_pipeline_`category`ipynb
-- cleanDF_pipeline_`inventory`.ipynb
-- cleanDF_pipeline_`film`.ipynb
 
 
 Each jupyter notebook includes a summary of the cleaning process.
@@ -57,18 +50,22 @@ Each jupyter notebook includes a summary of the cleaning process.
 </div>
 
 
-The cleaned dataframes are renamed as **`df *** 1.csv`** and available at:
+The cleaned dataframes are available at:
 
 ```
 DataBusterSQL 
 |__ data/                           
-   |__ clean/  
+   |__ clean/`******1.csv`
 ```
 
-After cleaning the csv files from NAs, duplicates or uninformative values, we have to consider the business needs and data availability to design an efficient EER of the DDBB. I propose the following EER structure:
+After cleaning the csv files from NAs, duplicates or uninformative values, we have to consider the business needs and data availability in order to design an efficient EER Diagram of the DDBB. I propose the following EERD structure:
 
-# 2. Create the DDBB EER<a name="EER"></a>
+</details>
 
+
+<details>
+<summary> 2. Create the DDBB EERD<a name="EERD"></a></summary>
+<br/>
 
 <div style="border: 4px solid white; padding: 0px;">
     <img src="images/blockbuster_EER.png" alt="Your Image Description" />
@@ -79,46 +76,20 @@ The DDBB will be made by **3 main tables**: `film.csv`, `rental.csv` and `policy
 and **9 child tables**  `language.csv`, `category.csv`, `special_features.csv`, `actor.csv`, `film_has_category.csv`, 
 `store.csv`, `staff.csv`, `inventory.csv`, `client.csv`
 
-Next, I will enumerate the columns of each **main table**,<br/> the **FK's** will relate to the **child** tables just referred.
-
 
 ## `film.csv`
-
 **Previous assumptions:** <br/>
 The business rents VHS and they only include 1 language
 The DDBB could be adapted to renting DVDs easily as the multiple languages could be stored in  `inventory.csv` as a new column associated to the specific film `copy_id`.
 
-* `(PK)film_id`
-* title
-* description
-* release_year
-* length
-* rating
-
 
 ## `rental.csv`
-
 **Previous assumptions:** <br/>
 If a client rents multiple films, we will generate multiple rental_ids <br/>
 The store possess multiple copies of the same film so **film_id != copy_id**
 
-* `(PK)rental_id`
-* rental_date
-* return_date
-   * invoice - as calculation of [(return_date-rental_date) * business.rental_rate] <br/>
-      (I intended to do it but I ran out of time)
-   <br/>
-
-`FOREIGN KEYS:` <br/>
-**1 to many:** <br/>
-   * client_id
-   * staff_id
-   * store_id
-   * copy_id
-
 
 ## `policy.csv`
-
 **Previous assumptions:** <br/>
 The DDBB manages multiple stores located in different countries under different renting policies.
 
@@ -129,49 +100,12 @@ The DDBB manages multiple stores located in different countries under different 
 * rental_rate - The renting price of the film varies according to the store location and film popularity
 * rental_duration - The max renting duration varies according to the store location and film popularity
 * replacement_cost - The selling price of the film varies according to the store location
+</details>
 
-
-## Child tables
-
-### `store.csv`
-
-* `(PK)store_id`
-* country
-* address
-
-
-### `staff.csv`
-
-* `(PK)staff_id`
-* name
-* address
-* salary
-* store_id (FK)
-* supervised_by
-
-### `client.csv`
-
-* `(PK)client_id`
-* address
-* rental_id (FK)
-
-
-###  `inventory.csv`
-* `(PK)copy_id`
-* film_id (FK)
-* store_id (FK)
-* language_id (FK)
-* status (rented/available)
-
-----
-
-### Child tables related to the film info
-
-###  `language.csv`,   `category.csv`,   `film_has_category.csv`,   `actor.csv`,   `special_features.csv`
-
-
-## 3. Make the required changes in the cleaned tables to accommodate the data into the EER <a name="changes1"></a>
-
+<details>
+<summary> 3. Reshape de tables<a name="changes1"></a></summary>
+<br>
+ 
 Once we established the DDBB structure, we had to make changes in the tables to accomodate the EER design.
 
 The code to editing the cleaned DF's is available at:
@@ -185,8 +119,13 @@ DataBusterSQL
 <div style="border: 4px solid white; padding: 0px;">
     <img src="images/changes.png" alt="Your Image Description" />
 </div>
+</details>
 
-## 4. Work with mySQL through python<a name="sqlalchemy1"></a>
+
+<details>
+<summary> 4. Work with mySQL through python<a name="sqlalchemy1"></a></summary>
+<br>
+
 
 The DDBB was created from `jupyter notebook` using `sqlalchemy.py` module. The pipeline consists in **1)** creating a cursor to connect to mySQL workbench, **2)** create a DDBB, **3)** create the tables and **4)** establish the primary key (PK) and foreign key (FK) relationships between the columns of the multiple tables.
 
@@ -203,15 +142,15 @@ The DDBB was created from `jupyter notebook` using `sqlalchemy.py` module. The p
 </div>
 
 
+
 The code to construct the DDBB is available in:
 
 ```
 DataBusterSQL 
 |__ notebooks/                           
-   |__ def/  
+   |__ def/  `python_SQL_link`.ipynb
 ```
- `python_SQL_link`.ipynb
-
+ 
 Once the DDBB is created and filled with data, we can explore and manipulate the tables and relations directly on `mySQL Workbench`.
 
 After corroborating that the structure of the DDBB and data format is correct, we can export both the EER and tables in a single `.sql` file.
@@ -225,7 +164,12 @@ DataBusterSQL
  `blockbuster.sql` <br/>
  `blockbuster_sql_queries.sql`
 
-## 5. Make some SQL queries<a name="queries"></a>
+</details>
+
+
+<details>
+<summary> 5. Make some SQL queries<a name="queries"></a></summary>
+<br>
 
 To import the DDBB into `mySQL Workbench` we need to:
 
@@ -237,7 +181,8 @@ To import the DDBB into `mySQL Workbench` we need to:
     <img src="images/query.png" alt="Your Image Description" />
 </div>
 
-
 <div style="border: 4px solid white; padding: 0px;">
     <img src="images/query3.png" alt="Your Image Description" />
 </div>
+
+</details>
